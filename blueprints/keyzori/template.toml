@@ -1,0 +1,17 @@
+[variables]
+main_domain = "${domain}"
+admin_key = "${hash:32}"
+postgres_password = "${hash:32}"
+
+[config]
+env = [
+  "KEYZORI_ADMIN_KEY=${admin_key}",
+  "KEYZORI_POSTGRES_PASSWORD=${postgres_password}",
+  # Set the exact Dokploy proxy IP or CIDR to enable client IP forwarding.
+  "KEYZORI_TRUSTED_PROXIES=",
+]
+
+[[config.domains]]
+serviceName = "keyzori"
+port = 3000
+host = "${main_domain}"
