@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   keyzori:
-    image: ghcr.io/keyzori/keyzori:v1.1.0
+    image: ghcr.io/keyzori/keyzori:latest
     restart: unless-stopped
     read_only: true
     tmpfs:

@@ -30,7 +30,8 @@ replace testing Dokploy's actual template processor and proxy.
 
 ## Dokploy verification
 
-Verified on 2026-09-16 using a fresh Ubuntu 24.04 WSL instance and Dokploy v0.30.6:
+Verified on 2026-09-16 using Keyzori v1.1.0 in a fresh Ubuntu 24.04 WSL instance
+with Dokploy v0.30.6, before switching the template to the moving `latest` tag:
 
 - Imported the exact Compose/TOML payload through Dokploy's Base64 import API.
 - Verified independently generated secrets and the `keyzori:3000` domain target.

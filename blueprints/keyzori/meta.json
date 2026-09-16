@@ -1,7 +1,7 @@
 {
   "id": "keyzori",
   "name": "Keyzori",
-  "version": "v1.1.0",
+  "version": "latest",
   "description": "Self-hosted software license server with customer management, device access controls, sessions, and usage metering through an HTTP API and CLI.",
   "links": {
     "github": "https://github.com/keyzori/keyzori",
