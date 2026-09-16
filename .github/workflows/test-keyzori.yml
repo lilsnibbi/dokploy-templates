@@ -1,0 +1,48 @@
+name: Test Keyzori Template
+
+on:
+  push:
+    paths:
+      - "blueprints/keyzori/**"
+      - "build-scripts/test-keyzori.mjs"
+      - "build-scripts/package.json"
+      - "build-scripts/pnpm-lock.yaml"
+      - ".github/workflows/test-keyzori.yml"
+  pull_request:
+    branches: [canary]
+    paths:
+      - "blueprints/keyzori/**"
+      - "build-scripts/test-keyzori.mjs"
+      - "build-scripts/package.json"
+      - "build-scripts/pnpm-lock.yaml"
+      - ".github/workflows/test-keyzori.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install validation dependencies
+        working-directory: build-scripts
+        run: pnpm install --frozen-lockfile
+      - name: Validate metadata
+        run: node build-scripts/generate-meta.js --check
+      - name: Validate Keyzori template
+        working-directory: build-scripts
+        run: |
+          pnpm run validate-docker-compose --file ../blueprints/keyzori/docker-compose.yml
+          pnpm run validate-template --dir ../blueprints/keyzori
+      - name: Test Keyzori deployment and persistence
+        working-directory: build-scripts
+        run: pnpm run test:keyzori
