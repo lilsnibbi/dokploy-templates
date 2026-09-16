@@ -4,7 +4,6 @@
   "description": "Build scripts for Dokploy Templates validation",
   "private": true,
   "scripts": {
-    "test:keyzori": "node --test test-keyzori.mjs",
     "validate-template": "tsx validate-template.ts",
     "validate-docker-compose": "tsx validate-docker-compose.ts",
     "process-meta": "node process-meta.js"
