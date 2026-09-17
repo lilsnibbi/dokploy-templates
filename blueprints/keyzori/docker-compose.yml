@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   keyzori:
-    image: ghcr.io/keyzori/keyzori:latest
+    image: ghcr.io/keyzori/keyzori:93b5d75ac8e5a4cd0740bfe1a46b5663674767fb
     restart: unless-stopped
     read_only: true
     tmpfs:
@@ -11,16 +11,15 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+    env_file:
+      - path: .env
+        required: false
     environment:
-      NODE_ENV: production
-      KEYZORI_HOST: 0.0.0.0
-      KEYZORI_PORT: "3000"
       KEYZORI_ADMIN_KEY: ${KEYZORI_ADMIN_KEY:?Set KEYZORI_ADMIN_KEY}
       KEYZORI_DATABASE_URL: postgresql://keyzori:${KEYZORI_POSTGRES_PASSWORD:?Set KEYZORI_POSTGRES_PASSWORD}@postgres:5432/keyzori
       KEYZORI_REDIS_URL: redis://redis:6379
-      KEYZORI_TRUSTED_PROXIES: ${KEYZORI_TRUSTED_PROXIES:-}
     expose:
-      - "3000"
+      - "6284"
     stop_grace_period: 30s
     depends_on:
       postgres:
@@ -28,7 +27,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-q", "-T", "5", "-O", "/dev/null", "http://127.0.0.1:3000/ready"]
+      test: ["CMD", "wget", "-q", "-T", "5", "-O", "/dev/null", "http://127.0.0.1:6284/ready"]
       interval: 15s
       timeout: 6s
       start_period: 60s
